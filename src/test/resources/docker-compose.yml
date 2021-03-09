@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    build:
+      context: .
+    image: "postgres:10.15-alpine"
+    environment:
+      - POSTGRES_DB=primer_demo
+      - POSTGRES_USER=primer_demo_user
+      - POSTGRES_PASSWORD=secret
+    ports:
+      - "5432:5432"
+  web-app:
+    build:
+      context: .
+      dockerfile: ../../../Dockerfile
+    image: primer-demo:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+  mockserver:
+    image: "jamesdbloom/mockserver:mockserver-5.9.0"
+    ports:
+      - "1080:1080"

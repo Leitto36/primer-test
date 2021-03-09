@@ -1,0 +1,27 @@
+package com.primer.demo.controller
+
+import com.primer.demo.controller.input.AddCardInput
+import com.primer.demo.controller.mapper.toCardModel
+import com.primer.demo.controller.mapper.toCardTokenOutput
+import com.primer.demo.controller.output.CardTokenOutput
+import com.primer.demo.service.CardService
+import com.primer.demo.util.CARD_URL
+import java.util.UUID
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
+
+@RestController
+@RequestMapping(path = [CARD_URL])
+class CardController(
+    private val cardService: CardService
+) {
+
+    @PostMapping()
+    fun add(@RequestBody addCardInput: AddCardInput) : CardTokenOutput = toCardTokenOutput(
+        cardService.addCard(
+            toCardModel(addCard = addCardInput, merchantId = UUID.randomUUID())
+        )
+    )
+}

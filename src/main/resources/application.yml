@@ -1,1 +1,45 @@
+# Application
+spring:
+  application:
+    name: flerovium
+  main:
+    banner-mode: 'off'
+  autoconfigure:
+    exclude: >
+      org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  exposed:
+    generate-ddl: false
+
+# Management Endpoints
+management:
+  endpoints:
+    enabled-by-default: false
+    web:
+      base-path: /management
+      exposure:
+        include:
+          - info
+          - health
+          - metrics
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    info:
+      enabled: true
+    metrics:
+      enabled: true
+    loggers:
+      enabled: true
+
+db:
+  url: jdbc:postgresql://db:${postgres.server.port:5432}/primer_demo
+  username: primer_demo_user
+  password: secret
+
+processor:
+  braintree:
+    merchantId: ${MERCHANT_ID}
+    publicKey: ${PUBLIC_KEY}
+    privateKey: ${PRIVATE_KEY}
 
