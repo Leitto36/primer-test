@@ -8,10 +8,6 @@ data class CreateTransactionOutput(
     val token: String,
     val amount: BigDecimal,
     val currency: Currency,
-    val type: CreateTransactionOutputType,
+    val type: String,
     val createdAt: Long
 )
-
-enum class CreateTransactionOutputType {
-    SALE
-}

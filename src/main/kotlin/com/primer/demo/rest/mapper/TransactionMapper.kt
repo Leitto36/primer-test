@@ -2,17 +2,15 @@ package com.primer.demo.rest.mapper
 
 import com.primer.demo.rest.input.CreateTransactionInput
 import com.primer.demo.rest.output.CreateTransactionOutput
-import com.primer.demo.rest.output.CreateTransactionOutputType
 import com.primer.demo.model.Transaction
 import com.primer.demo.model.TransactionType
-import java.util.UUID
 
-fun toTransaction(input: CreateTransactionInput, merchantId: UUID) : Transaction = Transaction(
+fun toTransaction(input: CreateTransactionInput) : Transaction = Transaction(
     token = input.token,
-    merchantId = merchantId,
+    merchantId = input.merchantId,
     amount = input.amount,
     currency = input.currency,
-    type =  TransactionType.valueOf(input.type.name)
+    type =  TransactionType.valueOf(input.type)
 )
 
 fun toCreateTransactionOutput(transaction: Transaction) : CreateTransactionOutput = CreateTransactionOutput(
@@ -20,6 +18,6 @@ fun toCreateTransactionOutput(transaction: Transaction) : CreateTransactionOutpu
     token = transaction.token,
     amount = transaction.amount,
     currency = transaction.currency,
-    type = CreateTransactionOutputType.valueOf(transaction.type.name),
+    type = transaction.type.name,
     createdAt = transaction.createdAt!!
 )

@@ -6,7 +6,6 @@ import com.primer.demo.rest.mapper.toTransaction
 import com.primer.demo.rest.output.CreateTransactionOutput
 import com.primer.demo.service.TransactionService
 import com.primer.demo.util.TRANSACTION_URL
-import java.util.UUID
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -22,9 +21,10 @@ class TransactionController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody createTransactionInput: CreateTransactionInput) : CreateTransactionOutput = toCreateTransactionOutput(
-        transactionService.create(
-            toTransaction(input = createTransactionInput, merchantId = UUID.randomUUID())
+    fun createTransaction(@RequestBody createTransactionInput: CreateTransactionInput) : CreateTransactionOutput =
+        toCreateTransactionOutput(
+            transactionService.create(
+                toTransaction(createTransactionInput)
+            )
         )
-    )
 }
