@@ -3,6 +3,8 @@ package com.primer.demo.payment.processor
 import com.braintreegateway.BraintreeGateway
 import com.braintreegateway.CreditCardRequest
 import com.braintreegateway.TransactionRequest
+import com.primer.demo.InvalidCreateCardProcessorResponseException
+import com.primer.demo.InvalidTransactionProcessorResponseException
 import com.primer.demo.model.Card
 import com.primer.demo.model.CardToken
 import org.springframework.stereotype.Component
@@ -24,20 +26,23 @@ class BrainTreeProcessor (
             return brainTreeGateway.creditCard().create(toCreditCardRequest(card)).let {
                 when {
                     it.isSuccess -> CardToken(
-                        cardId = card.id!!,
                         processorType = ProcessorType.BRAIN_TREE,
                         token = it.target.token,
                         status = CardTokenStatus.ACTIVE
                     )
                     else -> {
-                        log.error("process=create_credit_card  status=failed processor=${ProcessorType.BRAIN_TREE} merchant=${card.merchantId} reason=${it.message}")
-                        throw UnsuccessfulProcessorResponseException("Failed request for merchantId=${card.merchantId} with processor=${ProcessorType.BRAIN_TREE}")
+                        log.error("process=create_credit_card  status=failed processor=${ProcessorType.BRAIN_TREE} " +
+                                "merchant=${card.merchantId} reason=${it.message}")
+                        throw InvalidCreateCardProcessorResponseException(
+                            "Failed request for merchantId=${card.merchantId} " +
+                                    "with processor=${ProcessorType.BRAIN_TREE}")
                     }
                 }
             }
         } catch (e: Exception) {
             log.error("Failed call to brain tree processor for merchant=${card.merchantId}", e)
-            throw UnsuccessfulProcessorResponseException("Response from processor=${ProcessorType.BRAIN_TREE} wasn't returned for merchantId=${card.merchantId}")
+            throw UnsuccessfulProcessorResponseException("Response from processor=${ProcessorType.BRAIN_TREE} " +
+                "wasn't returned for merchantId=${card.merchantId}")
         }
     }
 
@@ -51,15 +56,19 @@ class BrainTreeProcessor (
                             createdAt = it.target.createdAt.toInstant().toEpochMilli()
                         )
                         else -> {
-                            log.error("process=create_transaction status=failed processor=${ProcessorType.BRAIN_TREE} merchant=${transaction.merchantId} reason=${it.message}")
-                            throw UnsuccessfulProcessorResponseException("Failed request for merchantId=${transaction.merchantId} with processor=${ProcessorType.BRAIN_TREE}")
+                            log.error("process=create_transaction status=failed processor=${ProcessorType.BRAIN_TREE} " +
+                                    "merchant=${transaction.merchantId} reason=${it.message}")
+                            throw InvalidTransactionProcessorResponseException(
+                                "Failed request for merchantId=${transaction.merchantId} with " +
+                                        "processor=${ProcessorType.BRAIN_TREE}")
                         }
                     }
                 }
             }
         } catch (e: Exception) {
             log.error("Failed call to brain tree processor for merchant=${transaction.merchantId}", e)
-            throw UnsuccessfulProcessorResponseException("Response from processor=${ProcessorType.BRAIN_TREE} wasn't returned for merchantId=${transaction.merchantId}")
+            throw UnsuccessfulProcessorResponseException("Response from processor=${ProcessorType.BRAIN_TREE} " +
+                    "wasn't returned for merchantId=${transaction.merchantId}")
         }
     }
 

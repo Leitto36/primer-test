@@ -14,7 +14,7 @@ data class Card(
 
 data class CardToken(
     val id: UUID? = null,
-    val cardId: UUID,
+    val cardId: UUID? = null,
     val processorType: ProcessorType,
     val token: String,
     val status: CardTokenStatus

@@ -6,10 +6,11 @@ import com.primer.demo.controller.mapper.toCardTokenOutput
 import com.primer.demo.controller.output.CardTokenOutput
 import com.primer.demo.service.CardService
 import com.primer.demo.util.CARD_URL
-import java.util.UUID
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -19,9 +20,10 @@ class CardController(
 ) {
 
     @PostMapping
-    fun add(@RequestBody addCardInput: AddCardInput) : CardTokenOutput = toCardTokenOutput(
+    @ResponseStatus(HttpStatus.CREATED)
+    fun addCard(@RequestBody addCardInput: AddCardInput) : CardTokenOutput = toCardTokenOutput(
         cardService.addCard(
-            toCardModel(addCard = addCardInput, merchantId = UUID.randomUUID())
+            toCardModel(addCardInput)
         )
     )
 }

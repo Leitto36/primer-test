@@ -4,10 +4,9 @@ import com.primer.demo.controller.input.AddCardInput
 import com.primer.demo.controller.output.CardTokenOutput
 import com.primer.demo.model.Card
 import com.primer.demo.model.CardToken
-import java.util.UUID
 
-fun toCardModel(addCard: AddCardInput, merchantId: UUID) = Card(
-    merchantId = merchantId,
+fun toCardModel(addCard: AddCardInput) = Card(
+    merchantId = addCard.merchantId,
     cardHolderName = addCard.cardHolderName,
     number = addCard.number,
     expirationMonth = addCard.expirationMonth,

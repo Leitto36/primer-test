@@ -40,7 +40,7 @@ object v {
 	const val LOG4J = "2.12.1" // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-bom
 	const val MOCKSERVER = "5.9.0" // https://mvnrepository.com/artifact/org.mock-server/mockserver-netty
 	const val MOCKITO_KOTLIN = "2.2.0" // https://mvnrepository.com/artifact/com.nhaarman.mockitokotlin2/mockito-kotlin
-	const val REST_ASSURED = "4.3.0" // https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0
+	const val REST_ASSURED = "2.9.0" // https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0
 	const val TESTCONTAINERS = "1.14.2" // https://mvnrepository.com/artifact/org.testcontainers/testcontainers
 }
 
@@ -50,9 +50,7 @@ dependencies {
 		exclude(group = "org.springframework.boot", module = "spring-boot-starter-logging")
 		exclude(group = "tomcat-embed-el", module = "spring-boot-starter-tomcat")
 	}
-	implementation("org.springframework.boot:spring-boot-starter-undertow") {
-		exclude(group = "org.jboss.logging", module = "jboss-logging")
-	}
+	implementation("org.springframework.boot:spring-boot-starter-undertow")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -71,9 +69,8 @@ dependencies {
 	testImplementation("org.testcontainers:junit-jupiter:${v.TESTCONTAINERS}")
 	testImplementation("org.testcontainers:testcontainers:${v.TESTCONTAINERS}")
 	testImplementation("org.mock-server:mockserver-client-java:${v.MOCKSERVER}")
-	testImplementation("io.rest-assured:rest-assured:${v.REST_ASSURED}")
-	testImplementation("io.rest-assured:json-path:${v.REST_ASSURED}")
-	testImplementation("io.rest-assured:xml-path:${v.REST_ASSURED}")
+
+	testImplementation("com.jayway.restassured:rest-assured:${v.REST_ASSURED}")
 
 	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 	testImplementation("org.springframework.security:spring-security-test")
@@ -86,7 +83,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
+		jvmTarget = "1.8"
 	}
 }
 
