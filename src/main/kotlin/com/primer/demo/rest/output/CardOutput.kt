@@ -1,4 +1,4 @@
-package com.primer.demo.controller.output
+package com.primer.demo.rest.output
 
 data class CardTokenOutput(
     val token: String

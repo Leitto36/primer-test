@@ -1,9 +1,9 @@
-package com.primer.demo.controller
+package com.primer.demo.rest
 
 import com.jayway.restassured.RestAssured
 import com.jayway.restassured.http.ContentType
 import com.primer.demo.AbstractIntegrationTest
-import com.primer.demo.controller.input.AddCardInput
+import com.primer.demo.rest.input.AddCardInput
 import com.primer.demo.model.Card
 import com.primer.demo.model.ProcessorType
 import com.primer.demo.test.trait.PaymentProcessorMock

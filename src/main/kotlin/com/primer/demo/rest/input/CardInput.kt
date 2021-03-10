@@ -1,4 +1,4 @@
-package com.primer.demo.controller.input
+package com.primer.demo.rest.input
 
 import java.util.UUID
 

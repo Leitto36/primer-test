@@ -1,9 +1,9 @@
-package com.primer.demo.controller
+package com.primer.demo.rest
 
-import com.primer.demo.controller.input.CreateTransactionInput
-import com.primer.demo.controller.mapper.toCreateTransactionOutput
-import com.primer.demo.controller.mapper.toTransaction
-import com.primer.demo.controller.output.CreateTransactionOutput
+import com.primer.demo.rest.input.CreateTransactionInput
+import com.primer.demo.rest.mapper.toCreateTransactionOutput
+import com.primer.demo.rest.mapper.toTransaction
+import com.primer.demo.rest.output.CreateTransactionOutput
 import com.primer.demo.service.TransactionService
 import com.primer.demo.util.TRANSACTION_URL
 import java.util.UUID

@@ -1,9 +1,9 @@
-package com.primer.demo.controller
+package com.primer.demo.rest
 
-import com.primer.demo.controller.input.AddCardInput
-import com.primer.demo.controller.mapper.toCardModel
-import com.primer.demo.controller.mapper.toCardTokenOutput
-import com.primer.demo.controller.output.CardTokenOutput
+import com.primer.demo.rest.input.AddCardInput
+import com.primer.demo.rest.mapper.toCardModel
+import com.primer.demo.rest.mapper.toCardTokenOutput
+import com.primer.demo.rest.output.CardTokenOutput
 import com.primer.demo.service.CardService
 import com.primer.demo.util.CARD_URL
 import org.springframework.http.HttpStatus

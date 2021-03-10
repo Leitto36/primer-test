@@ -1,7 +1,7 @@
-package com.primer.demo.controller.mapper
+package com.primer.demo.rest.mapper
 
-import com.primer.demo.controller.input.AddCardInput
-import com.primer.demo.controller.output.CardTokenOutput
+import com.primer.demo.rest.input.AddCardInput
+import com.primer.demo.rest.output.CardTokenOutput
 import com.primer.demo.model.Card
 import com.primer.demo.model.CardToken
 

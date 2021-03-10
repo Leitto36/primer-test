@@ -1,4 +1,4 @@
-package com.primer.demo.controller.output
+package com.primer.demo.rest.output
 
 import java.math.BigDecimal
 import java.util.Currency
