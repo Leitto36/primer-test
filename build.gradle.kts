@@ -36,8 +36,6 @@ repositories {
 
 object v {
 	const val BRAINTREE = "3.6.0" // https://mvnrepository.com/artifact/com.braintreepayments.gateway/braintree-java
-	const val EXPOSED = "0.29.1" // https://mvnrepository.com/artifact/org.jetbrains.exposed
-	const val HIKARI = "3.4.2" // https://mvnrepository.com/artifact/com.zaxxer/HikariCP
 	const val JAVAX = "2.0.1.Final" // https://mvnrepository.com/artifact/javax.validation/validation-api
 	const val LOG4J = "2.12.1" // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-bom
 	const val MOCKSERVER = "5.9.0" // https://mvnrepository.com/artifact/org.mock-server/mockserver-netty
@@ -58,21 +56,13 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
 	implementation("com.braintreepayments.gateway:braintree-java:${v.BRAINTREE}")
-
 	implementation("org.springframework.boot:spring-boot-starter-log4j2")
-
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${v.EXPOSED}")
-	implementation("org.jetbrains.exposed:exposed-java-time:${v.EXPOSED}")
-
 	implementation("javax.validation:validation-api:${v.JAVAX}")
 
 	enforcedConstraints("org.apache.logging.log4j:log4j-bom:${v.LOG4J}")
 
 	api("org.springframework.boot:spring-boot-starter-actuator")
-	api("com.zaxxer:HikariCP:${v.HIKARI}")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
