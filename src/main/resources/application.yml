@@ -32,11 +32,6 @@ management:
     loggers:
       enabled: true
 
-db:
-  url: jdbc:postgresql://db:${postgres.server.port:5432}/primer_demo
-  username: primer_demo_user
-  password: secret
-
 processor:
   braintree:
     merchantId: ${MERCHANT_ID}

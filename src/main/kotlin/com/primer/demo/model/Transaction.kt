@@ -6,23 +6,16 @@ import java.util.UUID
 
 data class Transaction (
     val id: UUID? = null,
-    val processorTransactionId: String,
+    val processorTransactionId: String? = null,
     val token: String,
     val merchantId: UUID,
     val amount: BigDecimal,
-    val taxAmount: BigDecimal,
     val currency: Currency,
-    val processorType: ProcessorType,
+    val processorType: ProcessorType? = null,
     val type: TransactionType,
-    val paymentMethod: TransactionPaymentMethod,
-    val createdAt: Long
+    val createdAt: Long? = null
 )
 
 enum class TransactionType {
     SALE
 }
-
-enum class TransactionPaymentMethod{
-    TEST
-}
-

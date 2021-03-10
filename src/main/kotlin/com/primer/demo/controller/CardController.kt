@@ -18,7 +18,7 @@ class CardController(
     private val cardService: CardService
 ) {
 
-    @PostMapping()
+    @PostMapping
     fun add(@RequestBody addCardInput: AddCardInput) : CardTokenOutput = toCardTokenOutput(
         cardService.addCard(
             toCardModel(addCard = addCardInput, merchantId = UUID.randomUUID())

@@ -2,6 +2,7 @@ package com.primer.demo.payment.processor
 
 import com.braintreegateway.BraintreeGateway
 import com.braintreegateway.CreditCardRequest
+import com.braintreegateway.TransactionRequest
 import com.primer.demo.model.Card
 import com.primer.demo.model.CardToken
 import org.springframework.stereotype.Component
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component
 import com.primer.demo.UnsuccessfulProcessorResponseException
 import com.primer.demo.model.CardTokenStatus
 import com.primer.demo.model.ProcessorType
+import com.primer.demo.model.Transaction
+import com.primer.demo.model.TransactionType
 import com.primer.demo.util.log
 
 @Component
@@ -27,14 +30,36 @@ class BrainTreeProcessor (
                         status = CardTokenStatus.ACTIVE
                     )
                     else -> {
-                        log.error("Failed call to brain tree processor for merchant=${card.merchantId} reason=${it.message}")
-                        throw UnsuccessfulProcessorResponseException("Failed request for merchantId=${card.merchantId}")
+                        log.error("process=create_credit_card  status=failed processor=${ProcessorType.BRAIN_TREE} merchant=${card.merchantId} reason=${it.message}")
+                        throw UnsuccessfulProcessorResponseException("Failed request for merchantId=${card.merchantId} with processor=${ProcessorType.BRAIN_TREE}")
                     }
                 }
             }
         } catch (e: Exception) {
             log.error("Failed call to brain tree processor for merchant=${card.merchantId}", e)
             throw UnsuccessfulProcessorResponseException("Response from processor=${ProcessorType.BRAIN_TREE} wasn't returned for merchantId=${card.merchantId}")
+        }
+    }
+
+    override fun createTransaction(transaction: Transaction): Transaction {
+        try {
+            return when(transaction.type) {
+                TransactionType.SALE -> brainTreeGateway.transaction().sale(toTransactionRequest(transaction)).let {
+                    when {
+                        it.isSuccess -> transaction.copy(
+                            processorTransactionId = it.target.id,
+                            createdAt = it.target.createdAt.toInstant().toEpochMilli()
+                        )
+                        else -> {
+                            log.error("process=create_transaction status=failed processor=${ProcessorType.BRAIN_TREE} merchant=${transaction.merchantId} reason=${it.message}")
+                            throw UnsuccessfulProcessorResponseException("Failed request for merchantId=${transaction.merchantId} with processor=${ProcessorType.BRAIN_TREE}")
+                        }
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            log.error("Failed call to brain tree processor for merchant=${transaction.merchantId}", e)
+            throw UnsuccessfulProcessorResponseException("Response from processor=${ProcessorType.BRAIN_TREE} wasn't returned for merchantId=${transaction.merchantId}")
         }
     }
 
@@ -47,4 +72,12 @@ class BrainTreeProcessor (
         .options()
             .verifyCard(true)
         .done()
+
+    private fun toTransactionRequest(transaction: Transaction) : TransactionRequest = TransactionRequest()
+        .creditCard()
+            .token(transaction.token)
+        .done()
+        .amount(transaction.amount)
+        .currencyIsoCode(transaction.currency.currencyCode)
+        .paymentMethodNonce("fake-valid-nonce")
 }
