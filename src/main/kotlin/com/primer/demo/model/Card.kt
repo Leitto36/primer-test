@@ -7,14 +7,15 @@ data class Card(
     val merchantId: UUID,
     val cardHolderName: String,
     val number: String,
-    val expirationMonth: Short,
-    val expirationYear: Short,
-    val cvv: Short
+    val expirationMonth: String,
+    val expirationYear: String,
+    val cvv: String
 )
 
 data class CardToken(
     val id: UUID? = null,
     val cardId: UUID? = null,
+    val customerId: String,
     val processorType: ProcessorType,
     val token: String,
     val status: CardTokenStatus

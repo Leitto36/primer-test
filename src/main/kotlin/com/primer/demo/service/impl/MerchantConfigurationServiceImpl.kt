@@ -13,6 +13,7 @@ class MerchantConfigurationServiceImpl : MerchantConfigurationService {
     override fun getMerchantConfiguration(merchantId: UUID) : MerchantConfiguration = MerchantConfiguration(
         id = UUID.randomUUID(),
         merchantId = merchantId,
+        customerId = null,
         processorType = ProcessorType.BRAIN_TREE,
         processorMerchantId = UUID.randomUUID().toString(),
         publicKey = UUID.randomUUID().toString(),

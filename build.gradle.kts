@@ -41,6 +41,7 @@ object v {
 	const val MOCKSERVER = "5.9.0" // https://mvnrepository.com/artifact/org.mock-server/mockserver-netty
 	const val MOCKITO_KOTLIN = "2.2.0" // https://mvnrepository.com/artifact/com.nhaarman.mockitokotlin2/mockito-kotlin
 	const val REST_ASSURED = "2.9.0" // https://mvnrepository.com/artifact/io.rest-assured/rest-assured/4.3.0
+	const val SPRINGFOX_SWAGGER = "2.9.2" // https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
 	const val TESTCONTAINERS = "1.14.2" // https://mvnrepository.com/artifact/org.testcontainers/testcontainers
 }
 
@@ -57,6 +58,9 @@ dependencies {
 	implementation("com.braintreepayments.gateway:braintree-java:${v.BRAINTREE}")
 	implementation("org.springframework.boot:spring-boot-starter-log4j2")
 	implementation("javax.validation:validation-api:${v.JAVAX}")
+
+	implementation("io.springfox:springfox-swagger2:${v.SPRINGFOX_SWAGGER}")
+	implementation("io.springfox:springfox-swagger-ui:${v.SPRINGFOX_SWAGGER}")
 
 	enforcedConstraints("org.apache.logging.log4j:log4j-bom:${v.LOG4J}")
 

@@ -3,6 +3,8 @@ package com.primer.demo.test.trait
 import com.braintreegateway.BraintreeGateway
 import com.braintreegateway.CreditCard
 import com.braintreegateway.CreditCardGateway
+import com.braintreegateway.Customer
+import com.braintreegateway.CustomerGateway
 import com.braintreegateway.Result
 import com.braintreegateway.TransactionGateway
 import com.braintreegateway.ValidationError
@@ -12,6 +14,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.given
 import com.nhaarman.mockitokotlin2.mock
 import com.primer.demo.model.Card
+import com.primer.demo.model.Merchant
 import com.primer.demo.model.ProcessorType
 import com.primer.demo.model.Transaction
 import java.util.GregorianCalendar
@@ -85,6 +88,35 @@ class PaymentProcessorMock(
             else -> Unit
         }
     }
+
+    override fun mockProcessorSuccessfulCreateCustomer(merchant: Merchant, processorType: ProcessorType, customerId: String) {
+        when (processorType) {
+            ProcessorType.BRAIN_TREE -> {
+                val customerGatewayMock = mock<CustomerGateway>()
+                val customerMock = mock<Customer>()
+
+                given(brainTreeGateway.customer()).willReturn(customerGatewayMock)
+                given(customerGatewayMock.create(any())).willReturn(Result(customerMock))
+                given(customerMock.id).willReturn(customerId)
+            }
+            else -> Unit
+        }
+    }
+
+    override fun mockProcessorUnsuccessfulCreateCustomer(merchant: Merchant, processorType: ProcessorType) {
+        when (processorType) {
+            ProcessorType.BRAIN_TREE -> {
+                val customerGatewayMock = mock<CustomerGateway>()
+                val errors = ValidationErrors()
+
+                errors.addError(ValidationError("email", ValidationErrorCode.CUSTOMER_EMAIL_IS_INVALID, "invalid email was supplied"))
+
+                given(brainTreeGateway.customer()).willReturn(customerGatewayMock)
+                given(customerGatewayMock.create(any())).willReturn(Result(errors))
+            }
+            else -> Unit
+        }
+    }
 }
 
 interface PaymentProcessorMockTrait {
@@ -93,4 +125,7 @@ interface PaymentProcessorMockTrait {
 
     fun mockProcessorSuccessfulCreateTransaction(transaction: Transaction, processorType: ProcessorType, transactionId: String)
     fun mockProcessorUnsuccessfulCreateTransaction(transaction: Transaction, processorType: ProcessorType)
+
+    fun mockProcessorSuccessfulCreateCustomer(merchant: Merchant, processorType: ProcessorType, customerId: String)
+    fun mockProcessorUnsuccessfulCreateCustomer(merchant: Merchant, processorType: ProcessorType)
 }

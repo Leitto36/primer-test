@@ -6,7 +6,7 @@ data class AddCardInput(
     val merchantId: UUID,
     val cardHolderName: String,
     val number: String,
-    val expirationMonth: Short,
-    val expirationYear: Short,
-    val cvv: Short
+    val expirationMonth: String,
+    val expirationYear: String,
+    val cvv: String
 )

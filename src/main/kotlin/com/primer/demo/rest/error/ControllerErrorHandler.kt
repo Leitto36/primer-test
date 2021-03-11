@@ -1,6 +1,7 @@
 package com.primer.demo.rest.error
 
 import com.primer.demo.InvalidCreateCardProcessorResponseException
+import com.primer.demo.InvalidCustomerProcessorResponseException
 import com.primer.demo.InvalidTransactionProcessorResponseException
 import com.primer.demo.UnknownPaymentProcessorException
 import com.primer.demo.util.log
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 
 @ControllerAdvice(basePackages = ["com.primer.demo.rest"])
 class ControllerErrorHandler {
+
+    @ExceptionHandler(InvalidCustomerProcessorResponseException::class)
+    fun handleInvalidCustomerProcessorResponseException(e: InvalidCustomerProcessorResponseException) =
+        errorHandler("process='controller_error_handler', result='invalid_merchant_details'", e)
 
     @ExceptionHandler(InvalidTransactionProcessorResponseException::class)
     fun handleInvalidTransactionProcessorResponseException(e: InvalidTransactionProcessorResponseException) =
