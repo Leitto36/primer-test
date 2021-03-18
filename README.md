@@ -4,15 +4,16 @@
 
 1. Register at https://sandbox.braintreegateway.com/ 
 
-2. Export your braintree api keys as environment variables
+2. Export your braintree Sandbox API keys as environment variables
 ```bash
 	export MERCHANT_ID=<your_merchant_id>
 	export PUBLIC_KEY=<your_public_key>
 	export PRIVATE_KEY=<your_private_key>
 ```
-3. Run application
+3. Build & Run application
 
 ```bash
+    ./gradlew :build
     ./gradlew :bootRun
 ```
 Application will run on address http://localhost:8080
